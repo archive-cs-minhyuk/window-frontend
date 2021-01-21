@@ -41,21 +41,19 @@ const DragAndDrop = (props) => {
       onDragOver={(event) => handleDragOver(event)}
       onDragEnter={(event) => handleDragEnter(event)}
     >
-      <p>Drag your files here</p>
-      <ol>
+      <ul className={styles.list_ul}>
         {data.fileList.map((file) => {
           return (
             <li key={file.name}>
-              <p>{file.name}</p>
               <img
                 src={file.preview}
                 alt=""
-                style={{ width: 100, height: 100 }}
+                style={{ width: 200, height: 200 }}
               />
             </li>
           );
         })}
-      </ol>
+      </ul>
     </div>
   );
 };
