@@ -22,6 +22,19 @@
   border-radius: 0.5rem;
 }
 
+.file_button {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  opacity: 0;
+}
+
+.fake_button {
+  position: absolute;
+  left: 30px;
+  top: 0px;
+}
+
 .list_ul {
   list-style: none;
 }

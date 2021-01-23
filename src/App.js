@@ -110,7 +110,12 @@ function App() {
   return (
     <div className={styles.App}>
       <div className={styles.utils}>
-        <input type="file" onChange={onFileChange}></input>
+        <input
+          type="file"
+          onChange={onFileChange}
+          className={styles.file_button}
+        ></input>
+        <button className={styles.fake_button}>Click left</button>
       </div>
       <DragAndDrop data={data} dispatch={dispatch} attachment={attachment} />
     </div>
