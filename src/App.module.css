@@ -5,17 +5,21 @@
   align-items: center;
 }
 
+.utils {
+  padding-top: 10px;
+  padding-bottom: 30px;
+}
+
 .Zone {
   display: flex;
   justify-content: flex-start;
-  width: 50%;
-  padding: 2rem;
+  min-width: 80%;
+  min-height: 600px;
+  overflow: hidden;
+  height: auto;
+  width: auto;
   background: #f2f2f2;
   border-radius: 0.5rem;
-
-  & .dropped-files {
-    font-weight: bold;
-  }
 }
 
 .list_ul {

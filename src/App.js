@@ -1,26 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./App.module.css";
 
 const DragAndDrop = (props) => {
-  const { data, dispatch } = props;
+  const { data, dispatch, attachment } = props;
 
   const handleDragEnter = (event) => {
-    //우리가 드래그를 하고 있는 도중
+    //우리가 드래그를 하고 있는 도중. zone에 처음 들어갔을 때 발생
     event.preventDefault();
     dispatch({ type: "AddToDropZone", inDropZone: true });
   };
 
   const handleDragOver = (event) => {
-    //PC에서 drop area로의 file copy
+    //PC에서 drop area로의 file copy. zone안에서 움직일 때 계속 발생
     event.preventDefault();
     event.dataTransfer.dropEffect = "copy"; //원래의 위치에서 drop zone으로 copy 될 것 명시
     dispatch({ type: "AddToDropZone", inDropZone: true });
   };
 
   const handleDrop = (event) => {
-    //file을 drop zone에 위치시키는 역할
+    //file을 drop zone에 위치시키는 역할. zone에서 마우스 놨을 때
     event.preventDefault();
-
     let files = [...event.dataTransfer.files];
     let files_with_preview = [];
 
@@ -34,6 +33,15 @@ const DragAndDrop = (props) => {
       dispatch({ type: "AddToDropZone", inDropZone: false });
     }
   };
+  const onClick = (event) => {
+    console.log(event);
+  };
+  let myURL = "";
+  if (attachment === "") {
+    myURL = null;
+  } else {
+    myURL = attachment;
+  }
   return (
     <div
       className={styles.Zone}
@@ -47,12 +55,18 @@ const DragAndDrop = (props) => {
             <li key={file.name}>
               <img
                 src={file.preview}
-                alt=""
-                style={{ width: 200, height: 200 }}
+                alt="ss"
+                style={{ width: 400, height: 400 }}
+                onClick={onClick}
               />
             </li>
           );
         })}
+        {attachment && (
+          <li>
+            <img src={myURL} style={{ width: 400, height: 400 }} alt="" />
+          </li>
+        )}
       </ul>
     </div>
   );
@@ -77,16 +91,28 @@ function App() {
     }
   };
   const [data, dispatch] = React.useReducer(reducer, state);
+  const [attachment, setAttachment] = useState("");
+  const onFileChange = (event) => {
+    const {
+      target: { files },
+    } = event;
+    const theFile = files[0];
+    const reader = new FileReader();
+    reader.onloadend = (finishedEvent) => {
+      const {
+        currentTarget: { result },
+      } = finishedEvent;
+      setAttachment(result);
+    };
+    reader.readAsDataURL(theFile);
+  };
 
   return (
     <div className={styles.App}>
-      <h1>Drag-and-drop practice</h1>
-      <DragAndDrop data={data} dispatch={dispatch} />
-      <ol className="dropped-files">
-        {data.fileList.map((file) => {
-          return <li key={file.name}>{file.name}</li>;
-        })}
-      </ol>
+      <div className={styles.utils}>
+        <input type="file" onChange={onFileChange}></input>
+      </div>
+      <DragAndDrop data={data} dispatch={dispatch} attachment={attachment} />
     </div>
   );
 }
