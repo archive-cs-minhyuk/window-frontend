@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "./App.module.css";
+import Resizer from "react-image-file-resizer";
 
 const DragAndDrop = (props) => {
   const { data, dispatch, attachment } = props;
@@ -42,6 +43,7 @@ const DragAndDrop = (props) => {
   } else {
     myURL = attachment;
   }
+  const mynum = { width: 600, height: 450 };
   return (
     <div
       className={styles.Zone}
@@ -56,7 +58,7 @@ const DragAndDrop = (props) => {
               <img
                 src={file.preview}
                 alt=""
-                style={{ width: 600, height: 450 }}
+                style={{ width: 300, height: 450 }}
                 onClick={onClick}
               />
             </li>
@@ -64,7 +66,7 @@ const DragAndDrop = (props) => {
         })}
         {attachment && (
           <li>
-            <img src={myURL} style={{ width: 600, height: 450 }} alt="" />
+            <img src={myURL} style={mynum} alt="" />
           </li>
         )}
       </ul>
@@ -151,12 +153,17 @@ function App() {
             <option value="m">m{"\xB2"} </option>
           </select>
         </form>
+        <div>
+          <button>확대</button>
+          <button>축소</button>
+        </div>
       </header>
       <div className={styles.App}>
         <DragAndDrop data={data} dispatch={dispatch} attachment={attachment} />
       </div>
       <footer>
         <label>Target Area:</label>
+        {inputWidth}
         {unit && (
           <span>
             {unit}
