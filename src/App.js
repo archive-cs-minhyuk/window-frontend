@@ -36,7 +36,7 @@ const DragAndDrop = (props) => {
   const onClick = (event) => {
     console.log(event);
   };
-  let myURL = "";
+  let myURL = ""; //클릭으로 upload한 file
   if (attachment === "") {
     myURL = null;
   } else {
@@ -55,8 +55,8 @@ const DragAndDrop = (props) => {
             <li key={file.name}>
               <img
                 src={file.preview}
-                alt="ss"
-                style={{ width: 400, height: 400 }}
+                alt=""
+                style={{ width: 600, height: 450 }}
                 onClick={onClick}
               />
             </li>
@@ -64,7 +64,7 @@ const DragAndDrop = (props) => {
         })}
         {attachment && (
           <li>
-            <img src={myURL} style={{ width: 400, height: 400 }} alt="" />
+            <img src={myURL} style={{ width: 600, height: 450 }} alt="" />
           </li>
         )}
       </ul>
@@ -93,6 +93,7 @@ function App() {
   const [data, dispatch] = React.useReducer(reducer, state);
   const [attachment, setAttachment] = useState("");
   const [inputWidth, setInputWidth] = useState("");
+  const [unit, setUnit] = useState("");
   const onChange = (event) => {
     const {
       target: { value },
@@ -101,6 +102,7 @@ function App() {
   };
   const onSubmit = (event) => {
     event.preventDefault();
+    console.log(event);
   };
   const onFileChange = (event) => {
     const {
@@ -116,6 +118,12 @@ function App() {
     };
     reader.readAsDataURL(theFile);
   };
+  const onUnitChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setUnit(value);
+  };
 
   return (
     <>
@@ -126,24 +134,36 @@ function App() {
           className={styles.file_button}
         ></input>
         <button className={styles.fake_button}>Click left</button>
-        <span className={styles.unitarea}>Unit Area:</span>
         <form onSubmit={onSubmit}>
+          <label className={styles.unitarea}>Unit Area:</label>
           <input
             type="text"
             placeholder="넓이 입력"
             value={inputWidth}
             onChange={onChange}
           />
-          <select name="unit">
-            <option value="mm2">mm{"\xB2"} </option>
-            <option value="cm2">cm{"\xB2"} </option>
-            <option value="m2">m{"\xB2"} </option>
+          <select value={unit} onChange={onUnitChange}>
+            <option value="" selected dispatch hidden>
+              단위 선택
+            </option>
+            <option value="mm">mm{"\xB2"} </option>
+            <option value="cm">cm{"\xB2"} </option>
+            <option value="m">m{"\xB2"} </option>
           </select>
         </form>
       </header>
       <div className={styles.App}>
         <DragAndDrop data={data} dispatch={dispatch} attachment={attachment} />
       </div>
+      <footer>
+        <label>Target Area:</label>
+        {unit && (
+          <span>
+            {unit}
+            {"\xB2"}
+          </span>
+        )}
+      </footer>
     </>
   );
 }
