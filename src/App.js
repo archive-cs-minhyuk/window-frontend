@@ -92,6 +92,16 @@ function App() {
   };
   const [data, dispatch] = React.useReducer(reducer, state);
   const [attachment, setAttachment] = useState("");
+  const [inputWidth, setInputWidth] = useState("");
+  const onChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setInputWidth(value);
+  };
+  const onSubmit = (event) => {
+    event.preventDefault();
+  };
   const onFileChange = (event) => {
     const {
       target: { files },
@@ -108,17 +118,33 @@ function App() {
   };
 
   return (
-    <div className={styles.App}>
-      <div className={styles.utils}>
+    <>
+      <header>
         <input
           type="file"
           onChange={onFileChange}
           className={styles.file_button}
         ></input>
         <button className={styles.fake_button}>Click left</button>
+        <span className={styles.unitarea}>Unit Area:</span>
+        <form onSubmit={onSubmit}>
+          <input
+            type="text"
+            placeholder="넓이 입력"
+            value={inputWidth}
+            onChange={onChange}
+          />
+          <select name="unit">
+            <option value="mm2">mm{"\xB2"} </option>
+            <option value="cm2">cm{"\xB2"} </option>
+            <option value="m2">m{"\xB2"} </option>
+          </select>
+        </form>
+      </header>
+      <div className={styles.App}>
+        <DragAndDrop data={data} dispatch={dispatch} attachment={attachment} />
       </div>
-      <DragAndDrop data={data} dispatch={dispatch} attachment={attachment} />
-    </div>
+    </>
   );
 }
 
