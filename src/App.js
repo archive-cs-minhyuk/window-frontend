@@ -122,18 +122,17 @@ function App() {
     setUnit(value);
   };
   const onBigClick = (event) => {
-    console.log(mysize);
     const newwidth = mysize.width * 1.5;
     const newheight = mysize.height * 1.5;
-    if (newwidth < 2400) {
+    if (newwidth < 2400 && (attachment !== "" || data.fileList.length !== 0)) {
+      //사진 있을때만 하기 위해. attachment -> 클릭으로 업로드. fileList -> 드래그로 업로드
       setMySize({ width: newwidth, height: newheight });
     }
   };
   const onSmallClick = (event) => {
-    console.log(mysize);
     const newwidth = (mysize.width * 2) / 3;
     const newheight = (mysize.height * 2) / 3;
-    if (newwidth > 100) {
+    if (newwidth > 100 && (attachment !== "" || data.fileList.length !== 0)) {
       setMySize({ width: newwidth, height: newheight });
     }
   };
