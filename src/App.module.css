@@ -19,15 +19,6 @@ header > .unitarea {
   left: 150px;
 }
 
-.App {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
-  padding-top: 30px;
-  padding-bottom: 30px;
-}
-
 .Zone {
   display: flex;
   justify-content: flex-start;
@@ -48,6 +39,15 @@ header > .unitarea {
 
 .drag-drop-zone.inside-drag-area {
   opacity: 0.7;
+}
+
+.App {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 footer {

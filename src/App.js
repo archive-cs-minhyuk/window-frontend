@@ -3,7 +3,7 @@ import styles from "./App.module.css";
 import Resizer from "react-image-file-resizer";
 
 const DragAndDrop = (props) => {
-  const { data, dispatch, attachment } = props;
+  const { data, dispatch, attachment, mysize } = props;
 
   const handleDragEnter = (event) => {
     //우리가 드래그를 하고 있는 도중. zone에 처음 들어갔을 때 발생
@@ -43,7 +43,6 @@ const DragAndDrop = (props) => {
   } else {
     myURL = attachment;
   }
-  const mynum = { width: 600, height: 450 };
   return (
     <div
       className={styles.Zone}
@@ -55,18 +54,13 @@ const DragAndDrop = (props) => {
         {data.fileList.map((file) => {
           return (
             <li key={file.name}>
-              <img
-                src={file.preview}
-                alt=""
-                style={{ width: 300, height: 450 }}
-                onClick={onClick}
-              />
+              <img src={file.preview} alt="" style={mysize} onClick={onClick} />
             </li>
           );
         })}
         {attachment && (
           <li>
-            <img src={myURL} style={mynum} alt="" />
+            <img src={myURL} style={mysize} alt="" />
           </li>
         )}
       </ul>
@@ -96,6 +90,7 @@ function App() {
   const [attachment, setAttachment] = useState("");
   const [inputWidth, setInputWidth] = useState("");
   const [unit, setUnit] = useState("");
+  const [mysize, setMySize] = useState({ width: 600, height: 450 });
   const onChange = (event) => {
     const {
       target: { value },
@@ -126,6 +121,22 @@ function App() {
     } = event;
     setUnit(value);
   };
+  const onBigClick = (event) => {
+    console.log(mysize);
+    const newwidth = mysize.width * 1.5;
+    const newheight = mysize.height * 1.5;
+    if (newwidth < 2400) {
+      setMySize({ width: newwidth, height: newheight });
+    }
+  };
+  const onSmallClick = (event) => {
+    console.log(mysize);
+    const newwidth = (mysize.width * 2) / 3;
+    const newheight = (mysize.height * 2) / 3;
+    if (newwidth > 100) {
+      setMySize({ width: newwidth, height: newheight });
+    }
+  };
 
   return (
     <>
@@ -154,12 +165,17 @@ function App() {
           </select>
         </form>
         <div>
-          <button>확대</button>
-          <button>축소</button>
+          <button onClick={onBigClick}>확대</button>
+          <button onClick={onSmallClick}>축소</button>
         </div>
       </header>
       <div className={styles.App}>
-        <DragAndDrop data={data} dispatch={dispatch} attachment={attachment} />
+        <DragAndDrop
+          data={data}
+          dispatch={dispatch}
+          attachment={attachment}
+          mysize={mysize}
+        />
       </div>
       <footer>
         <label>Target Area:</label>
