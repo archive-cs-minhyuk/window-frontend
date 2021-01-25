@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import styles from "./App.module.css";
+import styles from "./Home.module.css";
 import DragAndDrop from "./DragAndDrop";
 
-function App() {
+function Home() {
   const state = {
     inDropZone: false,
     fileList: [],
@@ -124,4 +124,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
