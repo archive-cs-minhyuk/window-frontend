@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./DragAndDrop.module.css";
 
 const DragAndDrop = (props) => {
-  const { data, dispatch, attachment, mysize } = props;
+  const { data, dispatch, attachment, mysize, replace } = props;
 
   const handleDragEnter = (event) => {
     //우리가 드래그를 하고 있는 도중. zone에 처음 들어갔을 때 발생
@@ -53,18 +53,35 @@ const DragAndDrop = (props) => {
         {data.fileList.map((file) => {
           return (
             <li key={file.name}>
-              <img src={file.preview} alt="" style={mysize} onClick={onClick} />
+              {replace ? (
+                <img
+                  src={file.preview}
+                  alt=""
+                  style={mysize}
+                  onClick={onClick}
+                />
+              ) : (
+                <wideImage src={file.preview} mysize={mysize} />
+              )}
             </li>
           );
         })}
         {attachment && (
           <li>
-            <img src={myURL} style={mysize} alt="" />
+            {replace ? (
+              <img src={myURL} style={mysize} alt="" />
+            ) : (
+              <wideImage src={myURL} mysize={mysize} />
+            )}
           </li>
         )}
       </ul>
     </div>
   );
+};
+
+const wideImage = (props) => {
+  const { src, mysize } = props;
 };
 
 export default DragAndDrop;

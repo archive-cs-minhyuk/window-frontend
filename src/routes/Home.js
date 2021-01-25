@@ -25,6 +25,7 @@ function Home() {
   const [inputWidth, setInputWidth] = useState("");
   const [unit, setUnit] = useState("");
   const [mysize, setMySize] = useState({ width: 600, height: 450 });
+  const [replace, setReplace] = useState(true);
   const onChange = (event) => {
     const {
       target: { value },
@@ -54,6 +55,14 @@ function Home() {
       target: { value },
     } = event;
     setUnit(value);
+  };
+  const onReplaceClick = (event) => {
+    if (replace === true) {
+      setReplace(false);
+    } else {
+      setReplace(true);
+    }
+    console.log(replace);
   };
   const onBigClick = (event) => {
     const newwidth = mysize.width * 1.5;
@@ -98,6 +107,9 @@ function Home() {
           </select>
         </form>
         <div>
+          <button onClick={onReplaceClick}>재배열</button>
+        </div>
+        <div>
           <button onClick={onBigClick}>확대</button>
           <button onClick={onSmallClick}>축소</button>
         </div>
@@ -108,6 +120,7 @@ function Home() {
           dispatch={dispatch}
           attachment={attachment}
           mysize={mysize}
+          replace={replace}
         />
       </div>
       <footer>
