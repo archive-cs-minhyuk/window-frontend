@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./DragAndDrop.module.css";
+import whitepic from "../images/whitespace.png";
 
 const DragAndDrop = (props) => {
   const { data, dispatch, attachment, mysize, replace } = props;
@@ -42,6 +43,19 @@ const DragAndDrop = (props) => {
   } else {
     myURL = attachment;
   }
+
+  const WideImage = (props) => {
+    const { src, mysize } = props;
+    const { width, height } = mysize;
+    const newsize = { width: width * 3, height: height * 3 };
+    const topsize = { width: width, height: height, left: width, top: height };
+    return (
+      <div className={styles.wideContainer}>
+        <img src={whitepic} style={newsize} className={styles.whitespace} />
+        <img src={src} style={topsize} class={styles.ontop} />
+      </div>
+    );
+  };
   return (
     <div
       className={styles.Zone}
@@ -61,7 +75,7 @@ const DragAndDrop = (props) => {
                   onClick={onClick}
                 />
               ) : (
-                <wideImage src={file.preview} mysize={mysize} />
+                <WideImage src={file.preview} mysize={mysize} />
               )}
             </li>
           );
@@ -71,17 +85,13 @@ const DragAndDrop = (props) => {
             {replace ? (
               <img src={myURL} style={mysize} alt="" />
             ) : (
-              <wideImage src={myURL} mysize={mysize} />
+              <WideImage src={myURL} mysize={mysize} />
             )}
           </li>
         )}
       </ul>
     </div>
   );
-};
-
-const wideImage = (props) => {
-  const { src, mysize } = props;
 };
 
 export default DragAndDrop;

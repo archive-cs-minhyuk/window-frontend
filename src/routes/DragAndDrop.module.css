@@ -11,6 +11,20 @@
   background: #f2f2f2;
 }
 
+.wideContainer {
+  position: relative;
+}
+
+.whitespace {
+  z-index: 1;
+  position: absolute;
+}
+
+.ontop {
+  z-index: 2;
+  position: absolute;
+}
+
 .list_ul {
   list-style: none;
 }

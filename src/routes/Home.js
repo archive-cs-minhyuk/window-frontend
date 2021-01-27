@@ -26,6 +26,7 @@ function Home() {
   const [unit, setUnit] = useState("");
   const [mysize, setMySize] = useState({ width: 600, height: 450 });
   const [replace, setReplace] = useState(true);
+  const [line, setLine] = useState(false);
   const onChange = (event) => {
     const {
       target: { value },
@@ -57,12 +58,14 @@ function Home() {
     setUnit(value);
   };
   const onReplaceClick = (event) => {
-    if (replace === true) {
-      setReplace(false);
-    } else {
-      setReplace(true);
+    if (attachment !== "" || data.fileList.length !== 0) {
+      //사진 있을때만
+      if (replace === true) {
+        setReplace(false);
+      } else {
+        setReplace(true);
+      }
     }
-    console.log(replace);
   };
   const onBigClick = (event) => {
     const newwidth = mysize.width * 1.5;
@@ -107,7 +110,9 @@ function Home() {
           </select>
         </form>
         <div>
+          <button>초기화</button>
           <button onClick={onReplaceClick}>재배열</button>
+          <button>직선</button>
         </div>
         <div>
           <button onClick={onBigClick}>확대</button>
